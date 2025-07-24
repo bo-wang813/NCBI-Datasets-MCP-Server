@@ -113,47 +113,98 @@ Add to your MCP settings:
 
 ## Usage Examples
 
-### Search for E. coli Genomes
+### Using with Cline
 
-```typescript
-// Search for E. coli genomes
-const result = await searchGenomes({
-  tax_id: 511145,
-  assembly_level: "complete",
-  max_results: 10,
-});
+Once configured, you can use the tools directly in Cline by referencing the server name and tool:
+
+**Search for E. coli Genomes:**
+
+```
+Use the ncbi-datasets-server to search for E. coli genomes with complete assembly level, limiting to 10 results using tax_id 511145
 ```
 
-### Get Detailed Genome Information
+**Get Detailed Genome Information:**
 
-```typescript
-// Get information for a specific genome
-const genomeInfo = await getGenomeInfo({
-  accession: "GCF_000005845.2",
-  include_annotation: true,
-});
+```
+Get detailed information for genome assembly GCF_000005845.2 including annotation data using ncbi-datasets-server
 ```
 
-### Search Genes by Symbol
+**Search for BRCA1 Gene:**
 
-```typescript
-// Search for BRCA1 gene
-const genes = await searchGenes({
-  gene_symbol: "BRCA1",
-  organism: "Homo sapiens",
-  max_results: 5,
-});
+```
+Search for the BRCA1 gene in Homo sapiens using ncbi-datasets-server, limit to 5 results
 ```
 
-### Compare Genomes
+### MCP Protocol Usage
 
-```typescript
-// Compare multiple genome assemblies
-const comparison = await compareGenomes({
-  accessions: ["GCF_000005845.2", "GCF_000001405.40"],
-  comparison_type: "basic_stats",
-  include_orthologs: true,
-});
+For direct MCP client integration, use JSON-RPC format:
+
+**Search Genomes:**
+
+```json
+{
+  "jsonrpc": "2.0",
+  "id": 1,
+  "method": "tools/call",
+  "params": {
+    "name": "search_genomes",
+    "arguments": {
+      "tax_id": 511145,
+      "assembly_level": "complete",
+      "max_results": 10
+    }
+  }
+}
+```
+
+**Get Genome Information:**
+
+```json
+{
+  "jsonrpc": "2.0",
+  "id": 2,
+  "method": "tools/call",
+  "params": {
+    "name": "get_genome_info",
+    "arguments": {
+      "accession": "GCF_000005845.2",
+      "include_annotation": true
+    }
+  }
+}
+```
+
+**Search Genes:**
+
+```json
+{
+  "jsonrpc": "2.0",
+  "id": 3,
+  "method": "tools/call",
+  "params": {
+    "name": "search_genes",
+    "arguments": {
+      "gene_symbol": "BRCA1",
+      "organism": "Homo sapiens",
+      "max_results": 5
+    }
+  }
+}
+```
+
+### Resource Access
+
+You can also access data directly using resource URIs:
+
+```json
+{
+  "jsonrpc": "2.0",
+  "id": 4,
+  "method": "resources/read",
+  "params": {
+    "uri": "ncbi://genome/GCF_000005845.2"
+  }
+}
 ```
 
 ## Resource Templates
