@@ -113,96 +113,176 @@ Add to your MCP settings:
 
 ## Usage Examples
 
-### Using with Cline
+### Genome Analysis
 
-Once configured, you can use the tools directly in Cline by referencing the server name and tool:
-
-**Search for E. coli Genomes:**
-
-```
-Use the ncbi-datasets-server to search for E. coli genomes with complete assembly level, limiting to 10 results using tax_id 511145
-```
-
-**Get Detailed Genome Information:**
-
-```
-Get detailed information for genome assembly GCF_000005845.2 including annotation data using ncbi-datasets-server
-```
-
-**Search for BRCA1 Gene:**
-
-```
-Search for the BRCA1 gene in Homo sapiens using ncbi-datasets-server, limit to 5 results
-```
-
-### MCP Protocol Usage
-
-For direct MCP client integration, use JSON-RPC format:
-
-**Search Genomes:**
-
-```json
+```javascript
+// Search for E. coli genomes
 {
-  "jsonrpc": "2.0",
-  "id": 1,
-  "method": "tools/call",
-  "params": {
-    "name": "search_genomes",
-    "arguments": {
-      "tax_id": 511145,
-      "assembly_level": "complete",
-      "max_results": 10
-    }
+  "tool": "search_genomes",
+  "arguments": {
+    "tax_id": 511145,
+    "assembly_level": "complete",
+    "max_results": 10
+  }
+}
+
+// Get detailed genome information
+{
+  "tool": "get_genome_info",
+  "arguments": {
+    "accession": "GCF_000005845.2",
+    "include_annotation": true
+  }
+}
+
+// Get genome summary statistics
+{
+  "tool": "get_genome_summary",
+  "arguments": {
+    "accession": "GCF_000005845.2"
   }
 }
 ```
 
-**Get Genome Information:**
+### Gene Research
 
-```json
+```javascript
+// Search for BRCA1 gene
 {
-  "jsonrpc": "2.0",
-  "id": 2,
-  "method": "tools/call",
-  "params": {
-    "name": "get_genome_info",
-    "arguments": {
-      "accession": "GCF_000005845.2",
-      "include_annotation": true
-    }
+  "tool": "search_genes",
+  "arguments": {
+    "gene_symbol": "BRCA1",
+    "organism": "Homo sapiens",
+    "max_results": 5
+  }
+}
+
+// Get detailed gene information
+{
+  "tool": "get_gene_info",
+  "arguments": {
+    "gene_id": 672,
+    "include_sequences": true
+  }
+}
+
+// Get gene sequences
+{
+  "tool": "get_gene_sequences",
+  "arguments": {
+    "gene_id": 672,
+    "sequence_type": "transcript"
   }
 }
 ```
 
-**Search Genes:**
+### Taxonomic Analysis
 
-```json
+```javascript
+// Search taxonomy by organism name
 {
-  "jsonrpc": "2.0",
-  "id": 3,
-  "method": "tools/call",
-  "params": {
-    "name": "search_genes",
-    "arguments": {
-      "gene_symbol": "BRCA1",
-      "organism": "Homo sapiens",
-      "max_results": 5
-    }
+  "tool": "search_taxonomy",
+  "arguments": {
+    "query": "Escherichia coli",
+    "max_results": 10
+  }
+}
+
+// Get detailed taxonomic information
+{
+  "tool": "get_taxonomy_info",
+  "arguments": {
+    "tax_id": 511145,
+    "include_lineage": true
+  }
+}
+
+// Get organism information
+{
+  "tool": "get_organism_info",
+  "arguments": {
+    "organism": "Escherichia coli"
   }
 }
 ```
 
-### Resource Access
+### Assembly Operations
 
-You can also access data directly using resource URIs:
-
-```json
+```javascript
+// Search assemblies with filtering
 {
-  "jsonrpc": "2.0",
-  "id": 4,
-  "method": "resources/read",
-  "params": {
-    "uri": "ncbi://genome/GCF_000005845.2"
+  "tool": "search_assemblies",
+  "arguments": {
+    "query": "human",
+    "assembly_level": "chromosome",
+    "assembly_source": "refseq",
+    "max_results": 20
+  }
+}
+
+// Get assembly information
+{
+  "tool": "get_assembly_info",
+  "arguments": {
+    "assembly_accession": "GCF_000001405.40",
+    "include_annotation": true
+  }
+}
+
+// Batch assembly lookup
+{
+  "tool": "batch_assembly_info",
+  "arguments": {
+    "accessions": ["GCF_000001405.40", "GCF_000005825.2", "GCF_000002305.1"]
+  }
+}
+```
+
+### Comparative Genomics
+
+```javascript
+// Compare multiple genomes
+{
+  "tool": "compare_genomes",
+  "arguments": {
+    "accessions": ["GCF_000005845.2", "GCF_000001405.40"],
+    "comparison_type": "basic_stats",
+    "include_orthologs": true
+  }
+}
+
+// Find orthologous genes
+{
+  "tool": "find_orthologs",
+  "arguments": {
+    "gene_symbol": "BRCA1",
+    "source_organism": "Homo sapiens",
+    "target_organisms": ["Mus musculus", "Rattus norvegicus"],
+    "similarity_threshold": 80
+  }
+}
+```
+
+### Virus Research
+
+```javascript
+// Search viral genomes
+{
+  "tool": "search_virus_genomes",
+  "arguments": {
+    "virus_name": "SARS-CoV-2",
+    "host": "Homo sapiens",
+    "max_results": 50
+  }
+}
+
+// Get viral genome information
+{
+  "tool": "get_virus_info",
+  "arguments": {
+    "accession": "NC_045512.2",
+    "include_proteins": true,
+    "include_metadata": true
   }
 }
 ```
