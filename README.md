@@ -1,6 +1,9 @@
-# NCBI Datasets MCP Server
+![ChEMBL MCP Server Logo](logo.png)
+# Unofficial NCBI Datasets MCP Server
 
 A Model Context Protocol (MCP) server that provides comprehensive access to the NCBI Datasets API. This server enables seamless integration with NCBI's vast collection of genomic, taxonomic, and biological data through 31 specialized tools.
+
+**Developed by [Augmented Nature](https://augmentednature.ai)**
 
 ## Features
 
