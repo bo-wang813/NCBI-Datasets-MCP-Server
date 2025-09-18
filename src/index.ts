@@ -211,6 +211,7 @@ class NCBIDatasetsServer {
           resources: {},
           tools: {},
         },
+        configSchema: null,
       }
     );
 
