@@ -211,9 +211,11 @@ class NCBIDatasetsServer {
           resources: {},
           tools: {},
         },
-        configSchema: null,
       }
     );
+
+    // Set configuration schema to null to indicate no configuration is required
+    this.server.setConfigSchema(null);
 
     // Configuration from environment variables
     this.baseUrl = process.env.NCBI_BASE_URL || 'https://api.ncbi.nlm.nih.gov/datasets/v2alpha';
