@@ -205,6 +205,7 @@ class NCBIDatasetsServer {
       {
         name: 'ncbi-datasets-server',
         version: '1.0.0',
+        configSchema: null, // 显式指定，不需要配置也要写
       },
       {
         capabilities: {
@@ -213,9 +214,6 @@ class NCBIDatasetsServer {
         },
       }
     );
-
-    // Set configuration schema to null to indicate no configuration is required
-    this.server.setConfigSchema(null);
 
     // Configuration from environment variables
     this.baseUrl = process.env.NCBI_BASE_URL || 'https://api.ncbi.nlm.nih.gov/datasets/v2alpha';
